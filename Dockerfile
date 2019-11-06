@@ -13,9 +13,9 @@ ENV TIMEOUT     300
 ENV DNS_ADDRS    8.8.8.8,8.8.4.4
 ENV ARGS=
 
-RUN cd /tmp \
+RUN cd /tmp/repo \
  && wget  https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.3.3/shadowsocks-libev-3.3.3.tar.gz \
- &&  tar -xvf /tmp/ss.tar.gz /tmp/repo \
+ &&  tar -xvf /tmp/repo/ss.tar.gz \
  && set -ex \
  # Build environment setup \
  && apk add --no-cache --virtual .build-deps \
