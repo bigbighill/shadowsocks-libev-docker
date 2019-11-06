@@ -14,7 +14,7 @@ ENV DNS_ADDRS    8.8.8.8,8.8.4.4
 ENV ARGS=
 
 RUN cd /tmp \
- && wget -C https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.3.3/shadowsocks-libev-3.3.3.tar.gz \
+ && wget  https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.3.3/shadowsocks-libev-3.3.3.tar.gz \
  &&  tar -xvf /tmp/ss.tar.gz /tmp/repo \
  && set -ex \
  # Build environment setup \
