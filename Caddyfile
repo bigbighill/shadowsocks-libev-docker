@@ -1,0 +1,21 @@
+https://xxxx.com {
+        redir https://www.xxx.tk
+	tls xxx@gmail.com
+}
+https://www.xxxx.com {
+	tls xxx@gmail.com
+	root /var/www
+	index index.html
+	gzip
+	timeouts none
+	proxy /bbbb 127.0.0.1:6666{
+	without /bbbb
+		websocket
+		header_upstream -Origin
+	}
+	proxy /aaaa 127.0.0.1:5555 {
+		without /aaaa
+		websocket
+		header_upstream -Origin
+	}
+}
