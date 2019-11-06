@@ -17,9 +17,15 @@ services:
       PASSWORD: "xxxxxxxxxx"
       ARGS: "--plugin /usr/local/bin/v2ray-plugin --plugin-opts server;path=xxxxxxxx"
 #############################################################
-1、    volumes:
-      - ./v2rayplugin:/usr/local/bin
-   下载v2ray-plugin 放在 v2rayplugin 目录
-2、ARGS:  path 参数 注意不带"/"
-    配合caddy 分流
+volumes:
+      - ./v2rayplugin:/usr/local/bin    下载v2ray-plugin文件放宿主机 v2rayplugin目录
+      - /etc/localtime:/etc/localtime    容器和宿主机时间同步
+    ports:
+      - "127.0.0.1:xxxxx:8338"           宿主机端口：容器端口
+    environment:
+      SERVER_ADDR: "0.0.0.0"
+      SERVER_PORT: "8388"
+      METHOD: "chacha20-ietf-poly1305"
+      PASSWORD: "xxxxxxxxxx"              
+      ARGS: "--plugin /usr/local/bin/v2ray-plugin --plugin-opts server;path=xxxxxxxx"   path 用于caddy分流
 #############################################################
