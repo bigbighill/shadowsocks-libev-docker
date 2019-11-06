@@ -1,27 +1,55 @@
-FROM ubuntu:latest as builder
+#
+# Dockerfile for shadowsocks-libev
+#
 
-RUN apt-get update
-RUN apt-get install curl -y
-RUN curl -L -o /tmp/go.sh https://install.direct/go.sh
-RUN chmod +x /tmp/go.sh
-RUN /tmp/go.sh
+FROM alpine
+LABEL maintainer="kev <noreply@datageek.info>, Sah <contact@leesah.name>"
 
-FROM alpine:latest
+ENV SERVER_ADDR 0.0.0.0
+ENV SERVER_PORT 8388
+ENV PASSWORD=
+ENV METHOD      aes-256-gcm
+ENV TIMEOUT     300
+ENV DNS_ADDRS    8.8.8.8,8.8.4.4
+ENV ARGS=
 
-LABEL maintainer "Darian Raymond <admin@v2ray.com>"
+COPY . /tmp/repo
+RUN set -ex \
+ # Build environment setup
+ && apk add --no-cache --virtual .build-deps \
+      autoconf \
+      automake \
+      build-base \
+      c-ares-dev \
+      libev-dev \
+      libtool \
+      libsodium-dev \
+      linux-headers \
+      mbedtls-dev \
+      pcre-dev \
+ # Build & install
+ && cd /tmp/repo \
+ && ./autogen.sh \
+ && ./configure --prefix=/usr --disable-documentation \
+ && make install \
+ && apk del .build-deps \
+ # Runtime dependencies setup
+ && apk add --no-cache \
+      ca-certificates \
+      rng-tools \
+      $(scanelf --needed --nobanner /usr/bin/ss-* \
+      | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
+      | sort -u) \
+ && rm -rf /tmp/repo
 
-COPY --from=builder /usr/bin/v2ray/v2ray /usr/bin/v2ray/
-COPY --from=builder /usr/bin/v2ray/v2ctl /usr/bin/v2ray/
-COPY --from=builder /usr/bin/v2ray/geoip.dat /usr/bin/v2ray/
-COPY --from=builder /usr/bin/v2ray/geosite.dat /usr/bin/v2ray/
-COPY config.json /etc/v2ray/config.json
+USER nobody
 
-RUN set -ex && \
-    apk --no-cache add ca-certificates && \
-    mkdir /var/log/v2ray/ &&\
-    chmod +x /usr/bin/v2ray/v2ctl && \
-    chmod +x /usr/bin/v2ray/v2ray
-
-ENV PATH /usr/bin/v2ray:$PATH
-
-CMD ["v2ray", "-config=/etc/v2ray/config.json"]
+CMD exec ss-server \
+      -s $SERVER_ADDR \
+      -p $SERVER_PORT \
+      -k ${PASSWORD:-$(hostname)} \
+      -m $METHOD \
+      -t $TIMEOUT \
+      -d $DNS_ADDRS \
+      -u \
+      $ARGS
