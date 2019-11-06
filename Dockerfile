@@ -11,12 +11,14 @@ ENV PASSWORD=
 ENV METHOD      aes-256-gcm
 ENV TIMEOUT     300
 ENV DNS_ADDRS    8.8.8.8,8.8.4.4
+ENV VER v3.3.3
+ENV VERS shadowaocks-libev-3.3.3.tar.gz
 ENV ARGS=
 
 RUN mkdir /tmp/repo \ 
  && cd /tmp/repo \
- && wget  https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.3.3/shadowsocks-libev-3.3.3.tar.gz \
- &&  tar -xvf /tmp/repo/ss.tar.gz \
+ && wget  https://github.com/shadowsocks/shadowsocks-libev/releases/download/$VER/$VERS \
+ &&  tar -xvf /tmp/repo/$VERS \
  && set -ex \
  # Build environment setup \
  && apk add --no-cache --virtual .build-deps \
