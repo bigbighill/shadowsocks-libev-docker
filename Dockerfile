@@ -33,7 +33,7 @@ RUN mkdir /tmp/repo \
       pcre-dev \
  # Build & install
  && cd /tmp/repo/shadowsocks-libev-$VER \
- && ./autogen.sh \
+ && ./autoreconf --install --force \
  && ./configure --prefix=/usr --disable-documentation \
  && make install \
  && apk del .build-deps \
