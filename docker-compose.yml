@@ -1,0 +1,25 @@
+version: '3.5'
+
+services:
+  shadowsocks-libev:
+    image: shadowsocks/shadowsocks-libev:latest
+    container_name: shadowsocks-libev
+    restart: always
+    volumes:
+      - ./v2rayplugin:/usr/local/bin
+      - /etc/localtime:/etc/localtime
+    ports:
+      - "127.0.0.1:xxxxx:8338"
+    environment:
+      SERVER_ADDR: "0.0.0.0"
+      SERVER_PORT: "8388"
+      METHOD: "chacha20-ietf-poly1305"
+      PASSWORD: "xxxxxxxxxx"
+      ARGS: "--plugin /usr/local/bin/v2ray-plugin --plugin-opts server;path=xxxxxxxx"
+#############################################################
+1、    volumes:
+      - ./v2rayplugin:/usr/local/bin
+   下载v2ray-plugin 放在 v2rayplugin 目录
+2、ARGS:  path 参数 注意不带"/"
+    配合caddy 分流
+#############################################################
