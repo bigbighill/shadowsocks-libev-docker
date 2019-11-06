@@ -11,23 +11,13 @@ ENV PASSWORD=
 ENV METHOD      aes-256-gcm
 ENV TIMEOUT     300
 ENV DNS_ADDRS    8.8.8.8,8.8.4.4
-# ENV VER 3.3.3
+ENV VER 3.3.3
 ENV ARGS=
-ARG ver
-ARG shadowsocks_libev_ver
-ARG download_link
-RUN ver=$(wget --no-check-certificate -qO- https://api.github.com/repos/shadowsocks/shadowsocks-libev/releases/latest | grep 'tag_name' | cut -d\" -f4) \
-    && [ -z ${ver} ] && echo "Error: Get shadowsocks-libev latest version failed" && exit 1 \
-    && shadowsocks_libev_ver="shadowsocks-libev-$(echo ${ver} | sed -e 's/^[a-zA-Z]//g')" \
-    && download_link="https://github.com/shadowsocks/shadowsocks-libev/releases/download/${ver}/${shadowsocks_libev_ver}.tar.gz" 
-
 
 RUN mkdir /tmp/repo \ 
  && cd /tmp/repo \
-# && wget --no-check-certificate https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$VER/shadowsocks-libev-$VER.tar.gz \
-  && wget --no-check-certificate $download_link \
-# &&  tar xvf /tmp/repo/shadowsocks-libev-$VER.tar.gz \
- && tar xvf /tmp/repo/$shardowsocks_libev_ver.tar.gz
+ && wget --no-check-certificate https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$VER/shadowsocks-libev-$VER.tar.gz \
+ &&  tar xvf /tmp/repo/shadowsocks-libev-$VER.tar.gz \
  && set -ex \
  # Build environment setup \
  && apk add --no-cache --virtual .build-deps \
