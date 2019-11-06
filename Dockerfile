@@ -32,7 +32,7 @@ RUN mkdir /tmp/repo \
       mbedtls-dev \
       pcre-dev \
  # Build & install
- && cd /tmp/repo \
+ && cd /tmp/repo/shadowsocks-libev-$VER \
  && ./autogen.sh \
  && ./configure --prefix=/usr --disable-documentation \
  && make install \
