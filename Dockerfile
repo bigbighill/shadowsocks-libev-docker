@@ -16,8 +16,8 @@ ENV ARGS=
 
 RUN mkdir /tmp/repo \ 
  && cd /tmp/repo \
- && wget  https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$VER/shadowsocks-libev-$VER.tar.gz \
- &&  tar -xvf /tmp/repo/shadowsocks-libev-$VER.tar.gz \
+ && wget --no-check-certificate https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$VER/shadowsocks-libev-$VER.tar.gz \
+ &&  tar xvf /tmp/repo/shadowsocks-libev-$VER.tar.gz \
  && set -ex \
  # Build environment setup \
  && apk add --no-cache --virtual .build-deps \
@@ -33,7 +33,6 @@ RUN mkdir /tmp/repo \
       pcre-dev \
  # Build & install
  && cd /tmp/repo/shadowsocks-libev-$VER \
- # ./autogen.sh \
  && autoreconf --install --force \
  && ./configure --prefix=/usr --disable-documentation \
  && make install \
