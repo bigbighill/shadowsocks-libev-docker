@@ -17,7 +17,7 @@ ENV ARGS=
 RUN mkdir /tmp/repo \ 
  && cd /tmp/repo \
  && wget  https://github.com/shadowsocks/shadowsocks-libev/releases/download/v$VER/shadowsocks-libev-$VER.tar.gz \
- &&  tar -xvf /tmp/repo/$VERS \
+ &&  tar -xvf /tmp/repo/shadowsocks-libev-$VER.tar.gz \
  && set -ex \
  # Build environment setup \
  && apk add --no-cache --virtual .build-deps \
