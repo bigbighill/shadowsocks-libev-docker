@@ -13,12 +13,8 @@ ENV TIMEOUT     300
 ENV DNS_ADDRS    8.8.8.8,8.8.4.4
 ENV ARGS=
 
-ENV ver=$(wget --no-check-certificate -qO- https://api.github.com/repos/shadowsocks/shadowsocks-libev/releases/latest | grep 'tag_name' | cut -d\" -f4)
-  [ -z ${ver} ] && echo "Error: Get shadowsocks-libev latest version failed" && exit 1
-ENV shadowsocks_libev_ver="shadowsocks-libev-$(echo ${ver} | sed -e 's/^[a-zA-Z]//g')"
-ENV download_link="https://github.com/shadowsocks/shadowsocks-libev/releases/download/${ver}/${shadowsocks_libev_ver}.tar.gz"
 
-RUN curl -L -o /tmp/ss.tar.gz download_link="https://github.com/shadowsocks/shadowsocks-libev/releases/download/${ver}/${shadowsocks_libev_ver}.tar.gz"
+RUN curl -L -o /tmp/ss.tar.gz https://github.com/shadowsocks/shadowsocks-libev/releases/download/v3.3.3/shadowsocks-libev-3.3.3.tar.gz
 RUN tar -xvf /tmp/ss.tar.gz /tmp/repo
 RUN set -ex \
  # Build environment setup
