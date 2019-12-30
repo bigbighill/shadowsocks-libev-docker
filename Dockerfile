@@ -13,7 +13,6 @@ ENV TIMEOUT     300
 ENV DNS_ADDRS    8.8.8.8,8.8.4.4
 ENV VER 3.3.3
 ENV ARGS=
-ENV TZ=Asia/Shanghai
 
 RUN mkdir /tmp/repo \ 
  && cd /tmp/repo \
@@ -48,6 +47,8 @@ RUN mkdir /tmp/repo \
  && rm -rf /tmp/repo
 
 USER nobody
+
+ENV TZ=Asia/Shanghai
 
 CMD exec ss-server \
       -s $SERVER_ADDR \
