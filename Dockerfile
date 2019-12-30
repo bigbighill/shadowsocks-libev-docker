@@ -13,6 +13,7 @@ ENV TIMEOUT     300
 ENV DNS_ADDRS    8.8.8.8,8.8.4.4
 ENV VER 3.3.3
 ENV ARGS=
+ENV TZ=Asia/Shanghai
 
 RUN mkdir /tmp/repo \ 
  && cd /tmp/repo \
