@@ -26,7 +26,6 @@ RUN mkdir /tmp/repo \
       build-base \
       c-ares-dev \
       libev-dev \
-      tzdata \
       libtool \
       libsodium-dev \
       linux-headers \
@@ -41,6 +40,7 @@ RUN mkdir /tmp/repo \
  # Runtime dependencies setup
  && apk add --no-cache \
       ca-certificates \
+      tzdata \
       rng-tools \
       $(scanelf --needed --nobanner /usr/bin/ss-* \
       | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
