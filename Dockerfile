@@ -26,6 +26,7 @@ RUN mkdir /tmp/repo \
       build-base \
       c-ares-dev \
       libev-dev \
+      tzdata \
       libtool \
       libsodium-dev \
       linux-headers \
