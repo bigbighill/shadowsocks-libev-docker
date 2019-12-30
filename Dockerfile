@@ -47,9 +47,10 @@ RUN mkdir /tmp/repo \
       | sort -u) \
  && rm -rf /tmp/repo
 
+ENV TZ=Asia/Shanghai
+
 USER nobody
 
-ENV TZ=Asia/Shanghai
 
 CMD exec ss-server \
       -s $SERVER_ADDR \
