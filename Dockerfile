@@ -51,7 +51,6 @@ ENV TZ=Asia/Shanghai
 
 USER nobody
 
-
 CMD exec ss-server \
       -s $SERVER_ADDR \
       -p $SERVER_PORT \
