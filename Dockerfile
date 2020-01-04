@@ -36,6 +36,7 @@ RUN mkdir /tmp/repo \
  && autoreconf --install --force \
  && ./configure --prefix=/usr --disable-documentation \
  && make install \
+ && ls /usr/bin/ss-* | xargs -n1 setcap cap_net_bind_service+ep \
  && apk del .build-deps \
  # Runtime dependencies setup
  && apk add --no-cache \
