@@ -2,7 +2,18 @@
 # Dockerfile for shadowsocks-libev
 #
 
-FROM alpine
+
+FROM golang:alpine AS builder
+RUN set -ex \
+	&& apk add --no-cache git \
+	&& mkdir -p /go/src/github.com/shadowsocks \
+	&& cd /go/src/github.com/shadowsocks \
+	&& git clone https://github.com/shadosocks/v2ray-plugin.git \
+	&& cd v2ray-plugin \
+	&& go get -d \
+	&& go build -o /go/bin/v2ray-plugin
+
+FROM alpine:latest
 LABEL maintainer="kev <noreply@datageek.info>, Sah <contact@leesah.name>"
 
 ENV SERVER_ADDR 0.0.0.0
@@ -49,16 +60,24 @@ RUN mkdir /tmp/repo \
       | sort -u) \
  && rm -rf /tmp/repo
 
+COPY --from=builder /go/bin/v2ray-plugin /usr/bin
+COPY config_sample.json /etc/shadowsocks-libev/config.json
+VOLUME /etc/shadowsocks-libev
+
 ENV TZ=Asia/Shanghai
 
 USER nobody
 
-CMD exec ss-server \
-      -s $SERVER_ADDR \
-      -p $SERVER_PORT \
-      -k ${PASSWORD:-$(hostname)} \
-      -m $METHOD \
-      -t $TIMEOUT \
-      -d $DNS_ADDRS \
-      -u \
-      $ARGS
+
+CMD [ "ss-server", "-c", "/etc/shadowsocks-libev/config.json" ]
+
+
+#CMD exec ss-server \
+#      -s $SERVER_ADDR \
+#      -p $SERVER_PORT \
+#      -k ${PASSWORD:-$(hostname)} \
+#      -m $METHOD \
+#      -t $TIMEOUT \
+#      -d $DNS_ADDRS \
+#      -u \
+#      $ARGS
