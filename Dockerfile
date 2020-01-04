@@ -36,6 +36,7 @@ RUN mkdir /tmp/repo \
       automake \
       build-base \
       c-ares-dev \
+      libcap \
       libev-dev \
       libtool \
       libsodium-dev \
