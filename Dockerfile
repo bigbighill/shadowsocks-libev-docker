@@ -2,7 +2,6 @@
 # Dockerfile for shadowsocks-libev
 #
 
-
 FROM golang:1.13.5-alpine AS builder
 RUN set -ex \
 	&& apk add --no-cache git \
@@ -16,14 +15,14 @@ RUN set -ex \
 FROM alpine:latest
 LABEL maintainer="kev <noreply@datageek.info>, Sah <contact@leesah.name>"
 
-ENV SERVER_ADDR 0.0.0.0
-ENV SERVER_PORT 8388
-ENV PASSWORD=
-ENV METHOD      aes-256-gcm
-ENV TIMEOUT     300
-ENV DNS_ADDRS    8.8.8.8,8.8.4.4
+#ENV SERVER_ADDR 0.0.0.0
+#ENV SERVER_PORT 8388
+#ENV PASSWORD=
+#ENV METHOD      aes-256-gcm
+#ENV TIMEOUT     300
+#ENV DNS_ADDRS    8.8.8.8,8.8.4.4
 ENV VER 3.3.3
-ENV ARGS=
+#ENV ARGS=
 
 RUN mkdir /tmp/repo \ 
  && cd /tmp/repo \
@@ -71,7 +70,6 @@ ENV TZ=Asia/Shanghai
 USER nobody
 
 CMD [ "ss-server", "-c", "/etc/shadowsocks-libev/config.json" ]
-
 
 #CMD exec ss-server \
 #      -s $SERVER_ADDR \
