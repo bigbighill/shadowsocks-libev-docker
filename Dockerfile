@@ -59,6 +59,7 @@ RUN mkdir /tmp/repo \
       | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
       | xargs -r apk info --installed \
       | sort -u) \
+ && apk del .build-deps \
  && rm -rf /tmp/repo
 
 COPY --from=builder /go/bin/v2ray-plugin /usr/bin
@@ -68,7 +69,6 @@ VOLUME /etc/shadowsocks-libev
 ENV TZ=Asia/Shanghai
 
 USER nobody
-
 
 CMD [ "ss-server", "-c", "/etc/shadowsocks-libev/config.json" ]
 
