@@ -3,12 +3,12 @@
 #
 
 
-FROM golang:alpine AS builder
+FROM golang:1.13.5-alpine AS builder
 RUN set -ex \
 	&& apk add --no-cache git \
 	&& mkdir -p /go/src/github.com/shadowsocks \
 	&& cd /go/src/github.com/shadowsocks \
-	&& git clone https://github.com/shadosocks/v2ray-plugin.git \
+	&& git clone https://github.com/shadowsocks/v2ray-plugin.git \
 	&& cd v2ray-plugin \
 	&& go get -d \
 	&& go build -o /go/bin/v2ray-plugin
