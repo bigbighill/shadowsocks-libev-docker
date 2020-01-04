@@ -45,6 +45,7 @@ RUN mkdir /tmp/repo \
       rng-tools \
       $(scanelf --needed --nobanner /usr/bin/ss-* \
       | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
+      | xargs -r apk info --installed \
       | sort -u) \
  && rm -rf /tmp/repo
 
