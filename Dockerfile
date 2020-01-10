@@ -21,7 +21,7 @@ LABEL maintainer="kev <noreply@datageek.info>, Sah <contact@leesah.name>"
 #ENV METHOD      aes-256-gcm
 #ENV TIMEOUT     300
 #ENV DNS_ADDRS    8.8.8.8,8.8.4.4
-ENV VER 3.3.3
+ENV VER 3.3.4
 #ENV ARGS=
 
 RUN mkdir /tmp/repo \ 
