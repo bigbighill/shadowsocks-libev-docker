@@ -9,8 +9,8 @@ RUN set -ex \
 	&& cd /go/src/github.com/shadowsocks \
 #	&& git clone https://github.com/shadowsocks/v2ray-plugin.git \
         && wget --no-check-certificate https://github.com/shadowsocks/v2ray-plugin/archive/v1.3.0.tar.gz \
-	&& tar xvf v1.3.0.tar.gz
-        && cd v2ray-plugin-1.3.0	
+	&& tar xvf v1.3.0.tar.gz \
+        && cd v2ray-plugin-1.3.0 \	
 #	&& cd v2ray-plugin \
 	&& go get -d \
 	&& go build -o /go/bin/v2ray-plugin
