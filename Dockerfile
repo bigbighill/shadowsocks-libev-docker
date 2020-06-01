@@ -2,7 +2,7 @@
 # Dockerfile for shadowsocks-libev
 #
 
-FROM golang:1.13.5-alpine AS builder
+FROM golang:1.14.3-alpine AS builder
 RUN set -ex \
 	&& apk add --no-cache git \
 	&& mkdir -p /go/src/github.com/shadowsocks \
