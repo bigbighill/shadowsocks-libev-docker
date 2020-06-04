@@ -2,15 +2,15 @@
 # Dockerfile for shadowsocks-libev
 #
 
-FROM golang:1.14.3-alpine AS builder
+FROM golang:1.14.4-alpine AS builder
 RUN set -ex \
 	&& apk add --no-cache git \
 	&& mkdir -p /go/src/github.com/shadowsocks \
 	&& cd /go/src/github.com/shadowsocks \
 #	&& git clone https://github.com/shadowsocks/v2ray-plugin.git \
-        && wget --no-check-certificate https://github.com/shadowsocks/v2ray-plugin/archive/v1.3.1.tar.gz \
-	&& tar xvf v1.3.1.tar.gz \
-        && cd v2ray-plugin-1.3.1 \	
+        && wget --no-check-certificate https://github.com/shadowsocks/v2ray-plugin/archive/v1.3.2.tar.gz \
+	&& tar xvf v1.3.2.tar.gz \
+        && cd v2ray-plugin-1.3.2 \	
 #	&& cd v2ray-plugin \
 	&& go get -d \
 	&& go build -o /go/bin/v2ray-plugin
